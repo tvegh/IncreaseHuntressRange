@@ -19,7 +19,7 @@ namespace IncreaseHuntressRange
         {
             godMode = Config.Wrap<bool>("Huntress", "GodMode", "Set the range to be so massive that you can attack any enemy that is visible", false);
             scaleFactor = Config.Wrap<float>("Huntress", "ScaleFactor", "Set how much the range increases (in meters) each level. Recommended: 3 (but I'm not your dad)", 3f);
-            Config.Wrap<float>("Huntress", "Base Value", "Base range (Original is 60), 100f);
+            baseValue = Config.Wrap<float>("Huntress", "Base Value", "Base range (Original is 60), 100f);
             On.RoR2.HuntressTracker.SearchForTarget += (orig, self, aimRay) =>
             {
                 float distance;

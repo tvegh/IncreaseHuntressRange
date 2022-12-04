@@ -13,10 +13,14 @@ namespace IncreaseHuntressRange
     {
         private static ConfigWrapper<bool> godMode;
         private static ConfigWrapper<float> scaleFactor;
+        private static ConfigWrapper<float> baseValue;
+
         public void Awake()
         {
             godMode = Config.Wrap<bool>("Huntress", "GodMode", "Set the range to be so massive that you can attack any enemy that is visible", false);
             scaleFactor = Config.Wrap<float>("Huntress", "ScaleFactor", "Set how much the range increases (in meters) each level. Recommended: 3 (but I'm not your dad)", 3f);
+            baseValue = Config.Wrap<float>("Huntress", "Base Value", "Base range (Original is 60)", 100f);
+
             On.RoR2.HuntressTracker.SearchForTarget += (orig, self, aimRay) =>
             {
                 float distance;
@@ -31,7 +35,7 @@ namespace IncreaseHuntressRange
                     // change distance based on level.
                     // level 1 = 60 (default)
                     // level 40 = 177
-                    distance = 60f + (scaleFactor.Value * (currentLevel - 1));
+                    distance = baseValue + (scaleFactor.Value * (currentLevel - 1));
                 }
 
                 self.GetFieldValue<BullseyeSearch>("search").teamMaskFilter = TeamMask.all;
